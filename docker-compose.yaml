@@ -1,0 +1,38 @@
+version: '3'
+services:
+    db:
+      image: mysql:8.0
+      restart: always
+      volumes:
+        - data:/var/lib/mysql
+      environment:
+        MYSQL_DATABASE: turbo
+        MYSQL_USER: user
+        MYSQL_PASSWORD: password
+        MYSQL_ROOT_PASSWORD: rootpassword
+      ports:
+        - "3306:3306"
+
+    adminer:
+      hostname: adminer
+      image: adminer
+      restart: always
+      ports:
+        - "8580:8080"
+      depends_on:
+        - db
+
+    application:
+      image: tamerlanaghaev/turbo:0.0.1-SNAPSHOT
+      restart: always
+      ports:
+        - "8080:8080"
+      environment:
+        - DB_CONNECTION_IP=db
+        - DB_CONNECTION_USERNAME=user
+        - DB_CONNECTION_PASSWORD=password
+        - DB_CONNECTION_PORT=3306
+      depends_on:
+        - db
+volumes:
+  data:
