@@ -31,7 +31,7 @@ public class VehicleController {
     }
 
     @GetMapping("/params")
-    public ResponseEntity<Page<AllVehiclesResponseDTO>> getVehicleByParams(@RequestBody ParamsRequestDTO params,
+    public ResponseEntity<Page<AllVehiclesResponseDTO>> getVehicleByParams(@RequestParam ParamsRequestDTO params,
                                                                            @RequestParam(defaultValue = "0") int page,
                                                                            @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
